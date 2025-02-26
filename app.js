@@ -47,6 +47,20 @@ function eliminarAmigo(index) {
 function guardarLista() {
     localStorage.setItem("amigos", JSON.stringify(amigos));
 }
+// Función para seleccionar un amigo al azar
+function seleccionarAmigo() {
+    let resultado = document.getElementById("resultado");
+
+    if (amigos.length === 0) {
+        resultado.innerHTML = "⚠️ No hay amigos en la lista.";
+        return;
+    }
+
+    let indiceAleatorio = Math.floor(Math.random() * amigos.length);
+    let amigoSeleccionado = amigos[indiceAleatorio];
+
+    resultado.innerHTML = `🎉 El amigo seleccionado es: <strong>${amigoSeleccionado}</strong>`;
+}
 
 // Cargar la lista al abrir la página
 actualizarLista();
