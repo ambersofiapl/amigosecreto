@@ -1,38 +1,52 @@
-// Array para almacenar los nombres
-let amigos = [];
+// Array para almacenar los nombres (carga desde localStorage si hay datos)
+let amigos = JSON.parse(localStorage.getItem("amigos")) || [];
 
 // Función para agregar un amigo
 function agregarAmigo() {
-    let inputNombre = document.getElementById("nombre"); // Corregido para coincidir con el HTML
+    let inputNombre = document.getElementById("nombre");
     let nombre = inputNombre.value.trim();
 
-    // Validar que el campo no esté vacío
     if (nombre === "") {
         alert("Por favor, inserte un nombre.");
         return;
     }
 
-    // Agregar al array
     amigos.push(nombre);
-
-    // Actualizar la lista en pantalla
+    guardarLista();
     actualizarLista();
-
-    // Limpiar el campo de entrada
     inputNombre.value = "";
 }
 
 // Función para recorrer el array y actualizar la lista en la página
 function actualizarLista() {
     let lista = document.getElementById("listaAmigos");
-
-    // Limpiar la lista antes de agregar nuevos elementos
     lista.innerHTML = "";
 
-    // Recorrer el array y agregar cada nombre a la lista
-    for (let i = 0; i < amigos.length; i++) {
+    amigos.forEach((amigo, index) => {
         let nuevoElemento = document.createElement("li");
-        nuevoElemento.textContent = amigos[i];
+        nuevoElemento.textContent = amigo;
+
+        let botonEliminar = document.createElement("button");
+        botonEliminar.textContent = "X";
+        botonEliminar.classList.add("eliminar");
+        botonEliminar.onclick = () => eliminarAmigo(index);
+
+        nuevoElemento.appendChild(botonEliminar);
         lista.appendChild(nuevoElemento);
-    }
+    });
 }
+
+// Función para eliminar un amigo de la lista
+function eliminarAmigo(index) {
+    amigos.splice(index, 1);
+    guardarLista();
+    actualizarLista();
+}
+
+// Función para guardar la lista en localStorage
+function guardarLista() {
+    localStorage.setItem("amigos", JSON.stringify(amigos));
+}
+
+// Cargar la lista al abrir la página
+actualizarLista();
