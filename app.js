@@ -41,9 +41,10 @@ function eliminarAmigo(index) {
     actualizarLista();
 }
 
-// Función para sortear un amigo
+// Función para sortear un amigo y borrar la lista
 function sortearAmigo() {
     let resultado = document.getElementById("resultado");
+    let lista = document.getElementById("listaAmigos");
 
     if (amigos.length === 0) {
         resultado.innerHTML = "⚠️ No hay amigos en la lista.";
@@ -53,7 +54,14 @@ function sortearAmigo() {
     let indiceAleatorio = Math.floor(Math.random() * amigos.length);
     let amigoSeleccionado = amigos[indiceAleatorio];
 
+    // Mostrar el nombre seleccionado
     resultado.innerHTML = `🎉 El amigo seleccionado es: <strong>${amigoSeleccionado}</strong>`;
+
+    // Limpiar la lista visualmente
+    lista.innerHTML = "";
+
+    // Vaciar el array de amigos
+    amigos = [];
 }
 
 // Limpia la lista cada vez que se recarga la página
