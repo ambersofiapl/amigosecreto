@@ -1,4 +1,4 @@
-// Array para almacenar los nombres (solo en la sesión actual)
+// Array para almacenar los nombres
 let amigos = [];
 
 // Función para agregar un amigo
@@ -16,7 +16,7 @@ function agregarAmigo() {
     inputNombre.value = "";
 }
 
-// Función para actualizar la lista en la página
+// Función para actualizar la lista en pantalla
 function actualizarLista() {
     let lista = document.getElementById("listaAmigos");
     lista.innerHTML = "";
@@ -27,7 +27,7 @@ function actualizarLista() {
 
         let botonEliminar = document.createElement("button");
         botonEliminar.textContent = "X";
-        botonEliminar.classList.add("eliminar");
+        botonEliminar.classList.add("button-delete");
         botonEliminar.onclick = () => eliminarAmigo(index);
 
         nuevoElemento.appendChild(botonEliminar);
@@ -41,12 +41,12 @@ function eliminarAmigo(index) {
     actualizarLista();
 }
 
-// Función para seleccionar un amigo al azar
-function seleccionarAmigo() {
+// Función para sortear un amigo
+function sortearAmigo() {
     let resultado = document.getElementById("resultado");
 
     if (amigos.length === 0) {
-        resultado.textContent = "⚠️ No hay amigos en la lista.";
+        resultado.innerHTML = "⚠️ No hay amigos en la lista.";
         return;
     }
 

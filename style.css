@@ -160,10 +160,3 @@ ul {
 .button-draw:hover {
     background-color: var(--color-button-hover);
 }
-button.eliminar {
-    background: red;
-    color: white;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-    border-radius: 3px;}
