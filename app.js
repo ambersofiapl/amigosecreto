@@ -1,5 +1,5 @@
-// Array para almacenar los nombres (carga desde localStorage si hay datos)
-let amigos = JSON.parse(localStorage.getItem("amigos")) || [];
+// Array para almacenar los nombres (solo en la sesión actual)
+let amigos = [];
 
 // Función para agregar un amigo
 function agregarAmigo() {
@@ -11,18 +11,12 @@ function agregarAmigo() {
         return;
     }
 
-    if (amigos.includes(nombre)) {
-        alert("⚠️ Este amigo ya está en la lista.");
-        return;
-    }
-
     amigos.push(nombre);
-    guardarLista();
     actualizarLista();
     inputNombre.value = "";
 }
 
-// Función para recorrer el array y actualizar la lista en la página
+// Función para actualizar la lista en la página
 function actualizarLista() {
     let lista = document.getElementById("listaAmigos");
     lista.innerHTML = "";
@@ -39,23 +33,12 @@ function actualizarLista() {
         nuevoElemento.appendChild(botonEliminar);
         lista.appendChild(nuevoElemento);
     });
-
-    // Guardar la lista después de actualizarla
-    guardarLista();
 }
 
 // Función para eliminar un amigo de la lista
 function eliminarAmigo(index) {
-    if (confirm("¿Seguro que deseas eliminar a este amigo?")) {
-        amigos.splice(index, 1);
-        guardarLista();
-        actualizarLista();
-    }
-}
-
-// Función para guardar la lista en localStorage
-function guardarLista() {
-    localStorage.setItem("amigos", JSON.stringify(amigos));
+    amigos.splice(index, 1);
+    actualizarLista();
 }
 
 // Función para seleccionar un amigo al azar
@@ -71,12 +54,10 @@ function seleccionarAmigo() {
     let amigoSeleccionado = amigos[indiceAleatorio];
 
     resultado.innerHTML = `🎉 El amigo seleccionado es: <strong>${amigoSeleccionado}</strong>`;
-    
-    // Agregar animación al resultado
-    resultado.style.transition = "transform 0.3s ease-in-out";
-    resultado.style.transform = "scale(1.2)";
-    setTimeout(() => resultado.style.transform = "scale(1)", 300);
 }
 
-// Cargar la lista al abrir la página
-actualizarLista();
+// Limpia la lista cada vez que se recarga la página
+window.onload = function () {
+    amigos = [];
+    actualizarLista();
+};
