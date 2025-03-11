@@ -7,7 +7,12 @@ function agregarAmigo() {
     let nombre = inputNombre.value.trim();
 
     if (nombre === "") {
-        alert("Por favor, inserte un nombre.");
+        alert("⚠️ Por favor, inserte un nombre.");
+        return;
+    }
+
+    if (amigos.includes(nombre)) {
+        alert("⚠️ Este amigo ya está en la lista.");
         return;
     }
 
@@ -34,25 +39,31 @@ function actualizarLista() {
         nuevoElemento.appendChild(botonEliminar);
         lista.appendChild(nuevoElemento);
     });
+
+    // Guardar la lista después de actualizarla
+    guardarLista();
 }
 
 // Función para eliminar un amigo de la lista
 function eliminarAmigo(index) {
-    amigos.splice(index, 1);
-    guardarLista();
-    actualizarLista();
+    if (confirm("¿Seguro que deseas eliminar a este amigo?")) {
+        amigos.splice(index, 1);
+        guardarLista();
+        actualizarLista();
+    }
 }
 
 // Función para guardar la lista en localStorage
 function guardarLista() {
     localStorage.setItem("amigos", JSON.stringify(amigos));
 }
+
 // Función para seleccionar un amigo al azar
 function seleccionarAmigo() {
     let resultado = document.getElementById("resultado");
 
     if (amigos.length === 0) {
-        resultado.innerHTML = "⚠️ No hay amigos en la lista.";
+        resultado.textContent = "⚠️ No hay amigos en la lista.";
         return;
     }
 
@@ -60,6 +71,11 @@ function seleccionarAmigo() {
     let amigoSeleccionado = amigos[indiceAleatorio];
 
     resultado.innerHTML = `🎉 El amigo seleccionado es: <strong>${amigoSeleccionado}</strong>`;
+    
+    // Agregar animación al resultado
+    resultado.style.transition = "transform 0.3s ease-in-out";
+    resultado.style.transform = "scale(1.2)";
+    setTimeout(() => resultado.style.transform = "scale(1)", 300);
 }
 
 // Cargar la lista al abrir la página
